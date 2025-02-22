@@ -1,0 +1,255 @@
+[
+  {
+    "difficulty": "easy",
+    "title": "Reverse an Array",
+    "description": "Write a function that reverses an array in place (without creating a new array).",
+    "examples": [
+      { "input": "nums = [1,2,3,4,5]", "output": "[5,4,3,2,1]" },
+      { "input": "nums = [0,-1,10]", "output": "[10,-1,0]" },
+      { "input": "nums = []", "output": "[]" }
+    ],
+    "topic": "Arrays",
+    "hints": [
+      "Try swapping elements from the start and end of the array, moving inward."
+    ],
+    "breakdown": "Use two pointers: one at the start (left) and one at the end (right). Swap elements and move pointers inward until they meet.",
+    "initialCode": "function reverseAnArray(nums) {\n  // enter code here\n}",
+    "solutionCode": "function reverseAnArray(nums) {\n  let left = 0;\n  let right = nums.length - 1;\n  while (left < right) {\n    [nums[left], nums[right]] = [nums[right], nums[left]];\n    left++;\n    right--;\n  }\n  return nums;\n}",
+    "testConfig": {
+      "functionName": "reverseAnArray",
+      "inputs": [
+        { "name": "nums", "parse": "nums = \\[([^\\]]*)\\]", "type": "array" }
+      ],
+      "outputType": "array"
+    }
+  },
+  {
+    "difficulty": "easy",
+    "title": "Two Sum",
+    "description": "Given an array of numbers and a target sum, return the indices of two numbers that add up to the target. Assume exactly one solution exists.",
+    "examples": [
+      { "input": "nums = [2,7,11,15], target = 9", "output": "[0,1]" },
+      { "input": "nums = [3,2,4], target = 6", "output": "[1,2]" },
+      { "input": "nums = [3,3], target = 6", "output": "[0,1]" }
+    ],
+    "topic": "Hashmaps",
+    "hints": ["Use a hashmap to store numbers and their indices."],
+    "breakdown": "Loop through the array, check if target - nums[i] exists in the hashmap, and return the pair of indices.",
+    "initialCode": "function twoSum(nums, target) {\n  // enter code here\n}",
+    "solutionCode": "function twoSum(nums, target) {\n  const map = new Map();\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    if (map.has(complement)) {\n      return [map.get(complement), i];\n    }\n    map.set(nums[i], i);\n  }\n  return [];\n}",
+    "testConfig": {
+      "functionName": "twoSum",
+      "inputs": [
+        { "name": "nums", "parse": "nums = \\[([^\\]]*)\\]", "type": "array" },
+        { "name": "target", "parse": "target = (\\d+)", "type": "number" }
+      ],
+      "outputType": "array"
+    }
+  },
+  {
+    "difficulty": "easy",
+    "title": "Valid Parentheses",
+    "description": "Given a string containing only (, ), {, }, [, ], determine if it’s valid (all brackets close correctly).",
+    "examples": [
+      { "input": "s = \"()\"", "output": "true" },
+      { "input": "s = \"({[]})\"", "output": "true" },
+      { "input": "s = \"(]\"", "output": "false" }
+    ],
+    "topic": "Stacks",
+    "hints": [
+      "Push opening brackets onto a stack and pop them when you find a matching closing bracket."
+    ],
+    "breakdown": "Use a stack to track opening brackets; for each closing bracket, check if the top of the stack matches.",
+    "initialCode": "function validParentheses(s) {\n  // enter code here\n}",
+    "solutionCode": "function validParentheses(s) {\n  const stack = [];\n  const brackets = { ')': '(', '}': '{', ']': '[' };\n  for (let char of s) {\n    if (brackets[char]) {\n      if (stack.pop() !== brackets[char]) return false;\n    } else {\n      stack.push(char);\n    }\n  }\n  return stack.length === 0;\n}",
+    "testConfig": {
+      "functionName": "validParentheses",
+      "inputs": [
+        { "name": "s", "parse": "s = \"([^\"]+)\"", "type": "string" }
+      ],
+      "outputType": "boolean"
+    }
+  },
+  {
+    "difficulty": "medium",
+    "title": "Remove Duplicates",
+    "description": "Given a sorted array, remove duplicates in place and return the new length.",
+    "examples": [
+      { "input": "nums = [1,1,2]", "output": "2" },
+      { "input": "nums = [0,0,1,1,1,2,2,3]", "output": "4" },
+      { "input": "nums = []", "output": "0" }
+    ],
+    "topic": "Two Pointers",
+    "hints": [
+      "Use a slow pointer for the unique elements and a fast pointer to scan ahead."
+    ],
+    "breakdown": "Move unique elements to the slow pointer’s position as the fast pointer finds them.",
+    "initialCode": "function removeDuplicates(nums) {\n  // enter code here\n}",
+    "solutionCode": "function removeDuplicates(nums) {\n  if (nums.length === 0) return 0;\n  let slow = 1;\n  for (let fast = 1; fast < nums.length; fast++) {\n    if (nums[fast] !== nums[fast - 1]) {\n      nums[slow] = nums[fast];\n      slow++;\n    }\n  }\n  return slow;\n}",
+    "testConfig": {
+      "functionName": "removeDuplicates",
+      "inputs": [
+        { "name": "nums", "parse": "nums = \\[([^\\]]*)\\]", "type": "array" }
+      ],
+      "outputType": "number"
+    }
+  },
+  {
+    "difficulty": "medium",
+    "title": "Max Subarray Sum",
+    "description": "Given an array of numbers and a window size k, find the maximum sum of any contiguous subarray of size k.",
+    "examples": [
+      { "input": "nums = [1,-2,3,4,-5,6], k = 3", "output": "5" },
+      { "input": "nums = [2,1,5,1,3,2], k = 3", "output": "9" },
+      { "input": "nums = [1], k = 1", "output": "1" }
+    ],
+    "topic": "Sliding Window",
+    "hints": [
+      "Slide a window of size k across the array, keeping track of the max sum."
+    ],
+    "breakdown": "Compute the initial window sum, then slide by subtracting the leftmost element and adding the next right element.",
+    "initialCode": "function maxSubarraySum(nums, k) {\n  // enter code here\n}",
+    "solutionCode": "function maxSubarraySum(nums, k) {\n  if (nums.length < k) return 0;\n  let maxSum = 0;\n  for (let i = 0; i < k; i++) maxSum += nums[i];\n  let windowSum = maxSum;\n  for (let i = k; i < nums.length; i++) {\n    windowSum = windowSum - nums[i - k] + nums[i];\n    maxSum = Math.max(maxSum, windowSum);\n  }\n  return maxSum;\n}",
+    "testConfig": {
+      "functionName": "maxSubarraySum",
+      "inputs": [
+        { "name": "nums", "parse": "nums = \\[([^\\]]*)\\]", "type": "array" },
+        { "name": "k", "parse": "k = (\\d+)", "type": "number" }
+      ],
+      "outputType": "number"
+    }
+  },
+  {
+    "difficulty": "medium",
+    "title": "Merge Sorted Arrays",
+    "description": "Merge two sorted arrays into one sorted array. Modify the first array in place (it has enough space at the end).",
+    "examples": [
+      {
+        "input": "nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3",
+        "output": "[1,2,2,3,5,6]"
+      },
+      { "input": "nums1 = [1], m = 1, nums2 = [], n = 0", "output": "[1]" },
+      { "input": "nums1 = [0], m = 0, nums2 = [1], n = 1", "output": "[1]" }
+    ],
+    "topic": "Sorting",
+    "hints": ["Start from the end of both arrays and work backward."],
+    "breakdown": "Use two pointers at the ends of both arrays, placing the larger value at the end of nums1.",
+    "initialCode": "function mergeSortedArrays(nums1, m, nums2, n) {\n  // enter code here\n}",
+    "solutionCode": "function mergeSortedArrays(nums1, m, nums2, n) {\n  let p1 = m - 1;\n  let p2 = n - 1;\n  let p = m + n - 1;\n  while (p2 >= 0 && p1 >= 0) {\n    if (nums1[p1] > nums2[p2]) {\n      nums1[p] = nums1[p1];\n      p1--;\n    } else {\n      nums1[p] = nums2[p2];\n      p2--;\n    }\n    p--;\n  }\n  while (p2 >= 0) {\n    nums1[p] = nums2[p2];\n    p2--;\n    p--;\n  }\n}",
+    "testConfig": {
+      "functionName": "mergeSortedArrays",
+      "inputs": [
+        {
+          "name": "nums1",
+          "parse": "nums1 = \\[([^\\]]*)\\]",
+          "type": "array"
+        },
+        { "name": "m", "parse": "m = (\\d+)", "type": "number" },
+        {
+          "name": "nums2",
+          "parse": "nums2 = \\[([^\\]]*)\\]",
+          "type": "array"
+        },
+        { "name": "n", "parse": "n = (\\d+)", "type": "number" }
+      ],
+      "outputType": "array"
+    }
+  },
+  {
+    "difficulty": "hard",
+    "title": "Cycle Detection",
+    "description": "Given a linked list simulated as an array with next indices, detect if it has a cycle and return the starting index (or -1 if no cycle).",
+    "examples": [
+      { "input": "arr = [3,2,0,-4], next = [1,2,3,1]", "output": "1" },
+      { "input": "arr = [1,2], next = [1,-1]", "output": "-1" },
+      { "input": "arr = [1], next = [0]", "output": "0" }
+    ],
+    "topic": "Linked Lists",
+    "hints": [
+      "Use a fast pointer (moves 2 steps) and a slow pointer (moves 1 step) to detect the cycle."
+    ],
+    "breakdown": "Floyd’s Tortoise and Hare: detect meeting point, then reset one pointer to start and move both at 1 step.",
+    "initialCode": "function cycleDetection(arr, next) {\n  // enter code here\n}",
+    "solutionCode": "function cycleDetection(arr, next) {\n  let slow = 0;\n  let fast = 0;\n  while (fast !== -1 && next[fast] !== -1) {\n    slow = next[slow];\n    fast = next[next[fast]];\n    if (slow === fast) {\n      slow = 0;\n      while (slow !== fast) {\n        slow = next[slow];\n        fast = next[fast];\n      }\n      return slow;\n    }\n  }\n  return -1;\n}",
+    "testConfig": {
+      "functionName": "cycleDetection",
+      "inputs": [
+        { "name": "arr", "parse": "arr = \\[([^\\]]*)\\]", "type": "array" },
+        { "name": "next", "parse": "next = \\[([^\\]]*)\\]", "type": "array" }
+      ],
+      "outputType": "number"
+    }
+  },
+  {
+    "difficulty": "hard",
+    "title": "Top K Frequent Elements",
+    "description": "Given an array of numbers, return the k most frequent elements in any order.",
+    "examples": [
+      { "input": "nums = [1,1,1,2,2,3], k = 2", "output": "[1,2]" },
+      { "input": "nums = [1], k = 1", "output": "[1]" },
+      { "input": "nums = [4,1,-1,2,-1,2,3], k = 2", "output": "[2,-1]" }
+    ],
+    "topic": "Top K Elements",
+    "hints": [
+      "Use a hashmap to count frequencies, then sort or use a heap to get the top k."
+    ],
+    "breakdown": "Count occurrences, sort by frequency, and take the top k elements.",
+    "initialCode": "function topKFrequent(nums, k) {\n  // enter code here\n}",
+    "solutionCode": "function topKFrequent(nums, k) {\n  const freq = new Map();\n  for (let num of nums) {\n    freq.set(num, (freq.get(num) || 0) + 1);\n  }\n  return Array.from(freq.entries())\n    .sort((a, b) => b[1] - a[1])\n    .slice(0, k)\n    .map(([num]) => num);\n}",
+    "testConfig": {
+      "functionName": "topKFrequent",
+      "inputs": [
+        { "name": "nums", "parse": "nums = \\[([^\\]]*)\\]", "type": "array" },
+        { "name": "k", "parse": "k = (\\d+)", "type": "number" }
+      ],
+      "outputType": "array"
+    }
+  },
+  {
+    "difficulty": "hard",
+    "title": "Word Ladder",
+    "description": "Given a start word, end word, and a word list, find the shortest transformation sequence length from start to end, changing one letter at a time (each intermediate word must be in the list).",
+    "examples": [
+      {
+        "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
+        "output": "5"
+      },
+      {
+        "input": "beginWord = \"cat\", endWord = \"dog\", wordList = [\"cat\",\"cot\",\"dog\"]",
+        "output": "3"
+      },
+      {
+        "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\"]",
+        "output": "0"
+      }
+    ],
+    "topic": "Graphs",
+    "hints": [
+      "Treat words as nodes in a graph and use BFS to find the shortest path."
+    ],
+    "breakdown": "Build a graph by connecting words differing by one letter, then use BFS from start to end.",
+    "initialCode": "function wordLadder(beginWord, endWord, wordList) {\n  // enter code here\n}",
+    "solutionCode": "function wordLadder(beginWord, endWord, wordList) {\n  if (!wordList.includes(endWord)) return 0;\n  const queue = [[beginWord, 1]];\n  const visited = new Set([beginWord]);\n  while (queue.length) {\n    const [word, level] = queue.shift();\n    if (word === endWord) return level;\n    for (let i = 0; i < word.length; i++) {\n      for (let c = 97; c <= 122; c++) {\n        const newWord = word.slice(0, i) + String.fromCharCode(c) + word.slice(i + 1);\n        if (wordList.includes(newWord) && !visited.has(newWord)) {\n          queue.push([newWord, level + 1]);\n          visited.add(newWord);\n        }\n      }\n    }\n  }\n  return 0;\n}",
+    "testConfig": {
+      "functionName": "wordLadder",
+      "inputs": [
+        {
+          "name": "beginWord",
+          "parse": "beginWord = \"([^\"]+)\"",
+          "type": "string"
+        },
+        {
+          "name": "endWord",
+          "parse": "endWord = \"([^\"]+)\"",
+          "type": "string"
+        },
+        {
+          "name": "wordList",
+          "parse": "wordList = \\[([^\\]]*)\\]",
+          "type": "array"
+        }
+      ],
+      "outputType": "number"
+    }
+  }
+]
